@@ -5,12 +5,11 @@ import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
-  Dashboard as DashboardView,
-  ProductList as ProductListView,
+
+   Leave as LeaveView,
   UserList as UserListView,
-  Typography as TypographyView,
-  Icons as IconsView,
-  Account as AccountView,
+  Employeeloglist as EmployeeloglistView,
+  Leaveloglist as LeaveloglistView,
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
@@ -23,14 +22,9 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/users"
       />
-      <RouteWithLayout
-        component={DashboardView}
-        exact
-        layout={MainLayout}
-        path="/dashboard"
-      />
+     
       <RouteWithLayout
         component={UserListView}
         exact
@@ -38,46 +32,28 @@ const Routes = () => {
         path="/users"
       />
       <RouteWithLayout
-        component={ProductListView}
+        component={LeaveView}
         exact
         layout={MainLayout}
-        path="/products"
+        path="/leaves"
       />
       <RouteWithLayout
-        component={TypographyView}
+        component={EmployeeloglistView}
         exact
         layout={MainLayout}
-        path="/typography"
+        path="/Emplog"
       />
       <RouteWithLayout
-        component={IconsView}
+        component={LeaveloglistView}
         exact
         layout={MainLayout}
-        path="/icons"
-      />
-      <RouteWithLayout
-        component={AccountView}
-        exact
-        layout={MainLayout}
-        path="/account"
+        path="/leavelog"
       />
       <RouteWithLayout
         component={SettingsView}
         exact
         layout={MainLayout}
         path="/settings"
-      />
-      <RouteWithLayout
-        component={SignUpView}
-        exact
-        layout={MinimalLayout}
-        path="/sign-up"
-      />
-      <RouteWithLayout
-        component={SignInView}
-        exact
-        layout={MinimalLayout}
-        path="/sign-in"
       />
       <RouteWithLayout
         component={NotFoundView}

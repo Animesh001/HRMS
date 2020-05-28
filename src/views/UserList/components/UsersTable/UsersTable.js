@@ -1,187 +1,306 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Avatar,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  TablePagination
-} from '@material-ui/core';
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import { getInitials } from 'helpers';
+const currencies = [
+  {
+    value: 'India',
+    label: 'India',
+  },
+  {
+    value: 'USA',
+    label: 'USA',
+  },
+  {
+    value: 'USD',
+    label: 'Australia',
+  },
+];
 
-const useStyles = makeStyles(theme => ({
-  root: {},
-  content: {
-    padding: 0
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '50ch',
+    },
   },
-  inner: {
-    minWidth: 1050
-  },
-  nameContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  avatar: {
-    marginRight: theme.spacing(2)
-  },
-  actions: {
-    justifyContent: 'flex-end'
-  }
 }));
 
-const UsersTable = props => {
-  const { className, users, ...rest } = props;
 
-  const classes = useStyles();
+// export class UsersTable extends React.Component{
+  export default function FormPropsTextFields() {
+   const classes = useStyles();
+   const [currency, setCurrency] = React.useState('EUR');
 
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handleSelectAll = event => {
-    const { users } = props;
-
-    let selectedUsers;
-
-    if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
-    } else {
-      selectedUsers = [];
-    }
-
-    setSelectedUsers(selectedUsers);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUsers.indexOf(id);
-    let newSelectedUsers = [];
-
-    if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
-    } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedUsers(newSelectedUsers);
-  };
-
-  const handlePageChange = (event, page) => {
-    setPage(page);
-  };
-
-  const handleRowsPerPageChange = event => {
-    setRowsPerPage(event.target.value);
-  };
-
+   const handleChange = (event) => {
+     setCurrency(event.target.value);
+   };
+      // render(){
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
-      <CardContent className={classes.content}>
-        <PerfectScrollbar>
-          <div className={classes.inner}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === users.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.slice(0, rowsPerPage).map(user => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
-                        color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <div className={classes.nameContainer}>
-                        <Avatar
-                          className={classes.avatar}
-                          src={user.avatarUrl}
-                        >
-                          {getInitials(user.name)}
-                        </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
-                      </div>
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
-                    </TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </PerfectScrollbar>
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <TablePagination
-          component="div"
-          count={users.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </CardActions>
-    </Card>
+   <form className={classes.root} noValidate autoComplete="off">
+     <div>
+       <h1>Personal Information</h1>
+     </div>
+  <div>
+    <TextField
+      required
+      id="outlined-required"
+      label="First Name"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="Middle Name"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="Last Name"
+      variant="outlined"
+    />
+  </div>
+  <div>
+       <h3>Address</h3>
+     </div>
+  <div>
+  <TextField
+      required
+      id="outlined-required"
+      label="Street Address"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="Street Address Line2"
+      variant="outlined"
+    />
+   
+  </div>
+  <div>
+  <TextField
+      required
+      id="outlined-required"
+      label="City"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="State"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="Zip code"
+      variant="outlined"
+    />
+  <TextField
+          id="outlined-select-currency-native"
+          select
+          label="Country"
+          value={currency}
+          onChange={handleChange}
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Please select your country"
+          variant="outlined"
+        >
+          {currencies.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
+   
+  </div>
+  <div>
+       <h3>Contact Details</h3>
+     </div>
+
+     <div>
+  <TextField
+      required
+      id="outlined-required"
+      label="Phone no"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Email"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Emergency cont"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Birth Date"
+      variant="outlined"
+    />
+    </div>
+    <div>
+       <h3>Position Details</h3>
+     </div>
+     <div>
+  <TextField
+      required
+      id="outlined-required"
+      label="Position Title"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Report To"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Employment Type"
+      variant="outlined"
+    />
+      <TextField
+      required
+      id="outlined-required"
+      label="Department"
+      variant="outlined"
+    />
+     <TextField
+    id="date"
+    label="Joining Date"
+    type="date"
+    variant="outlined"
+    defaultValue="2017-05-24"
+    className={classes.textField}
+    InputLabelProps={{
+      shrink: true,
+    }}
+  />
+   <TextField
+    id="date"
+    label="End Date(if required)"
+    type="date"
+    variant="outlined"
+    defaultValue="2017-05-24"
+    className={classes.textField}
+    InputLabelProps={{
+      shrink: true,
+    }}
+  />
+    </div>
+    <div>
+       <h3>Experiance Details</h3>
+     </div>
+     <div>
+     <TextField
+      required
+      id="outlined-required"
+      label="Last Organization"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Duration"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Designation"
+      variant="outlined"
+    />
+    <TextField
+      required
+      id="outlined-required"
+      label="Last Organization"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Duration"
+      variant="outlined"
+    />
+     <TextField
+      required
+      id="outlined-required"
+      label="Designation"
+      variant="outlined"
+    />
+       </div>
+    <div>
+       <h3>Bank & Tax Details</h3>
+     </div>
+     <div>
+  <TextField
+      required
+      id="outlined-required"
+      label="Account No"
+      variant="outlined"
+    />
+    <TextField
+      required
+      id="outlined-required"
+      label="Account Name"
+      variant="outlined"
+    />
+    <TextField
+      required
+      id="outlined-required"
+      label="Tax File No"
+      variant="outlined"
+    />
+    <TextField
+      required
+      id="outlined-required"
+      label="Bank Name"
+      variant="outlined"
+    />
+    <TextField
+      id="outlined"
+      label="Account Type"
+      variant="outlined"
+    />
+    <TextField
+      required
+      id="outlined-required"
+      label="IFSC Code"
+      variant="outlined"
+    />
+    </div>
+    <div>
+       <h3>Upload Docs</h3>
+     </div>
+    <div>
+    <TextField
+      type="file"
+      required
+      variant="outlined"
+    />
+     <TextField
+      type="file"
+      required
+      variant="outlined"
+    />
+      </div>
+</form>
+
   );
-};
+  
+}
 
-UsersTable.propTypes = {
-  className: PropTypes.string,
-  users: PropTypes.array.isRequired
-};
-
-export default UsersTable;
+// export default FormPropsTextFields;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
-import { UsersToolbar, UsersTable } from './components';
+import { LeaveToolbar, LeaveTable } from './components';
 // import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
@@ -13,19 +13,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserList = () => {
+const Leave = () => {
   const classes = useStyles();
 
-  const [users] = useState();
+  const [leaves] = useState();
 
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <LeaveToolbar/>
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <LeaveTable leaves={leaves} />
       </div>
     </div>
   );
 };
 
-export default UserList;
+export default Leave;

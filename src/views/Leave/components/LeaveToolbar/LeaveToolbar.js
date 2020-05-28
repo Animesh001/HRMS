@@ -45,7 +45,7 @@ const UsersToolbar = props => {
           color="primary"
           variant="contained"
         >
-          Add employee
+          Approved
         </Button>
       </div>
      
