@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { Button } from '@material-ui/core';
 const currencies = [
     {
       value: 'India',
@@ -75,6 +75,13 @@ const useStyles = makeStyles((theme) => ({
          <h1>Employee Leave Form</h1>
        </div>
     <div>
+
+    <TextField
+        required
+        id="outlined-required"
+        label="Mobile No"
+        variant="outlined"
+      />
       <TextField
         required
         id="outlined-required"
@@ -191,6 +198,16 @@ const useStyles = makeStyles((theme) => ({
           variant="outlined"
           width="150ch"
         />
+           </div>
+           <div className="d-flex justify-content-center">
+             <div>
+           <Button
+          color="primary"
+          variant="contained"
+        >
+          Approved
+        </Button>
+        </div>
            </div>
       </form>
 );

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MaterialTable from 'material-table';
-
+import Swal from 'sweetalert2';
+import axios from '../../../../axios-routes';
+import { EmplogTable } from '..';
 export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
+    requestd : false,
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Address', field: 'Add' },
-      { title: 'Contact', field: 'cont', type: 'numeric' },
+      { title: 'Address 1', field: 'address1' },
+      { title: 'Address 2', field: 'address2' },
+      { title: 'Contact', field: 'phone', type: 'numeric' },
       { title: 'Position Info', field: 'post' },
       { title: 'Exprieance Info', field: 'Exinfo' },
       { title: 'Bank Info', field: 'Bank' },
@@ -19,20 +23,28 @@ export default function MaterialTableDemo() {
     //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
     //   },
     ],
-    data: [
-      { name: 'Mehmet', 
-      Add: 'Dangipara near rajendra prasad girls high school Siliguri',
-       cont:7602335491, post: "Guest faulty" ,Exinfo:"4 years",
-      Bank:"Hdfc",
-    },
-    { name: 'Animesh', 
-    Add: 'Dangipara near rajendra prasad girls high school Siliguri',
-     cont:7602335491, post: "Guest faulty" ,Exinfo:"4 years",
-    Bank:"Hdfc",
-  },
-    ],
+    data: [ ],
   });
 
+
+  useEffect(() => {    // Update the document title using the browser API 
+    const data = {...state}; 
+    if(state.requestd == false) {
+  axios.post("/listEmployee", {}).then(response => {
+    
+      let Empdata = {...state , requestd:true};
+      let list = [];
+  
+      //console.log(response.data.result);
+      Empdata.data = response.data.result;
+      setState(Empdata);
+     }).catch(err => {
+      Swal.fire('Oops...', 'Connection Error', 'error')
+     })
+    }  
+    console.log("useEffect")
+   });
+    
   return (
     <MaterialTable
       title="Employee Logbook"
@@ -56,6 +68,14 @@ export default function MaterialTableDemo() {
               resolve();
               if (oldData) {
                 setState((prevState) => {
+                  
+                  axios.post("/update", newData).then(result => {
+                    if(result.data.code ==0){
+                     Swal.fire('Success', 'Updated Successfully', 'success')
+                    } else {
+                     Swal.fire('Oops...', 'Connection Error', 'error')
+                    }
+               });
                   const data = [...prevState.data];
                   data[data.indexOf(oldData)] = newData;
                   return { ...prevState, data };
@@ -69,6 +89,15 @@ export default function MaterialTableDemo() {
               resolve();
               setState((prevState) => {
                 const data = [...prevState.data];
+                let dataToDelete = data[data.indexOf(oldData)];
+                  dataToDelete.deleted = true;
+                  axios.post("/update", dataToDelete).then(result => {
+                       if(result.data.code ==0){
+                        Swal.fire('Success', 'Deleted Successfully', 'success')
+                       } else {
+                        Swal.fire('Oops...', 'Connection Error', 'error')
+                       }
+                  });
                 data.splice(data.indexOf(oldData), 1);
                 return { ...prevState, data };
               });
