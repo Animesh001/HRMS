@@ -50,15 +50,24 @@ Employee.find({deleted: false}).sort({_id:-1}).then((result) => {
 router.post("/addLeave", (req,res,next) => {
 let remaining;
 
+
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+const firstDate = new Date(req.body.leaveTo);
+const secondDate = new Date(req.body.leaveFrom);
+
+const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+
+//console.log(diffDays);
 Employee.find({phone: req.body.phone , deleted:false}).then(result2 => {
   let data =  result2[0];
-  console.log(result2[0].leaveRemaining);
-  data.leaveRemaining = data.leaveRemaining -1;
+  //console.log(result2[0].leaveRemaining);
+  data.leaveRemaining = data.leaveRemaining - diffDays;
   remaining = data.leaveRemaining;
   Employee.updateOne({_id: data.id}, data).then(() => {
     let leave  = new Leave({
       ...req.body,
-      leaveRemaining: remaining
+      leaveRemaining: remaining,
+      deleted:false
       });
      
     leave.save()
@@ -83,7 +92,7 @@ Employee.find({phone: req.body.phone , deleted:false}).then(result2 => {
 })
 
 router.post("/leaveLog", (req,res,next) => {
-Leave.find({leaveFrom: {$gte:req.body.from, $lte: req.body.to }, deleted:false}).sort({_id: -1}).then(result => {
+Leave.find({leaveFrom: {"$gte":req.body.from, "$lte": req.body.to }, deleted:false}).sort({_id: -1}).then(result => {
     if(result.length == 0){
       res.status(200).json({
         code: 0,
@@ -173,7 +182,8 @@ router.post("/findEmployee" ,(req,res,next) => {
 
 
 router.post("/update", (req,res,next) => {
-  Employee.updateOne({_id: req.body.id}, {...req.body}).then(response => {
+  //console.log(req.body);
+  Employee.updateOne({_id: req.body._id}, {...req.body}).then(response => {
     res.status(200).json({
       code: 0,
       result: [],
