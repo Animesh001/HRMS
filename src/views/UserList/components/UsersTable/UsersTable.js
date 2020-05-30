@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import { Button } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import axios from '../../../../axios-routes';
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     let data = new FormData();
 const [Emp, setEmp] = React.useState(data);
    const classes = useStyles();
-   const [currency, setCurrency] = React.useState('EUR');
+
 
 const imgAdd = (e ,field)=> {
 
@@ -55,10 +55,16 @@ const imgAdd = (e ,field)=> {
       //console.log(Emp)
   }
 const onSubmitHandler = ()=> {
+
+  
 let emp = {...Emp};
    let fname = "";
    let mname = "";
    let lname = "";
+if(!emp.doc1 || !emp.doc2 || !emp.name || !emp.phone || !emp.email){
+  return Swal.fire('Incomplete Form', 'Please Fill All The Details', 'error')
+}
+
   Object.keys(emp).forEach(key => {
    
     if(key !== "fName" || key !== "mName" || key !== "lName"){
@@ -70,7 +76,7 @@ let emp = {...Emp};
       data.append('name', fname+" " + mname + " " + lname);
     } else if(key === "mName") {
       mname  = emp[key];
-    } else if(key == "fName"){
+    } else if(key === "fName"){
       fname =  emp[key];
     }
  
@@ -81,7 +87,7 @@ let emp = {...Emp};
 }
   axios.post("/addEmployee", data, config)
     .then(response => {
-       if(response.data.code == 0){
+       if(response.data.code === 0){
         Swal.fire('Success', 'Employee Added Successfully!', 'success');
        } else {
         Swal.fire('Oops...', response.data.msg, 'error')
@@ -94,9 +100,7 @@ let emp = {...Emp};
     });
 }
 
-   const handleChange = (event) => {
-     setCurrency(event.target.value);
-   };
+
       // render(){
   return (
    <form className={classes.root} noValidate autoComplete="off">
@@ -172,7 +176,7 @@ let emp = {...Emp};
           id="outlined-select-currency-native"
           select
           label="Country"
-          value={currency}
+
           onChange={(e ) => {consoleLogger(e, "country")}}
           SelectProps={{
             native: true,
@@ -215,10 +219,15 @@ let emp = {...Emp};
       onChange={(e ) => consoleLogger(e, "emergencyContact")}
     />
      <TextField
-      required
-      id="outlined-required"
-      label="Birth Date"
-      variant="outlined"
+       id="date"
+       label="Date Of Birth"
+       type="date"
+       variant="outlined"
+       defaultValue={new Date()}
+       className={classes.textField}
+       InputLabelProps={{
+         shrink: true,
+       }}
       onChange={(e ) => consoleLogger(e, "dob")}
     />
     </div>
@@ -259,7 +268,7 @@ let emp = {...Emp};
     label="Joining Date"
     type="date"
     variant="outlined"
-    defaultValue="2017-05-24"
+    defaultValue={Date.UTC()}
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
@@ -271,7 +280,7 @@ let emp = {...Emp};
     label="End Date(if required)"
     type="date"
     variant="outlined"
-    defaultValue="2017-05-24"
+    defaultValue=""
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
@@ -399,6 +408,7 @@ let emp = {...Emp};
           variant="contained"
           onClick={onSubmitHandler}
           type="reset"
+          
         >
           Add employee
         </Button>

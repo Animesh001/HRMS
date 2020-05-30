@@ -1,19 +1,21 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import MaterialTable from 'material-table';
-
+import Swal from 'sweetalert2';
+import axios from '../../../../axios-routes';
 export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
+    requestd:false,
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Leave from', field: 'lfrom' },
-      { title: 'Leave Upto', field: 'lupto', type: 'numeric' },
-      { title: 'Leave Type', field: 'ltype' },
-      { title: 'Employee Status', field: 'Estatus' },
-      { title: 'Leave', field: 'l' },
-      { title: 'Leave Reason', field: 'lreason' },
-      { title: 'Total Leave', field: 'tl' },
-      { title: 'Leave Taken', field: 'lt' },
-      { title: 'Leave Status', field: 'lstatus' },
+      { title: 'Leave from', field: 'leaveFrom' },
+      { title: 'Leave Upto', field: 'leaveTo' },
+      { title: 'Leave Type', field: 'leaveType' },
+      { title: 'Employee Status', field: 'status' },
+      { title: 'Leave', field: 'time' },
+      { title: 'Leave Reason', field: 'reason' },
+      { title: 'Total Leave', field: 'total' },
+      { title: 'Leave Remaining', field: 'leaveRemaining' },
+     
 
 
 
@@ -27,260 +29,52 @@ export default function MaterialTableDemo() {
     //   },
     ],
     data: [
-    {   name: 'Mehmet', 
-        lfrom: '24/04/2020',
-        lupto:'26/04/2020', 
-        ltype: "CL" ,
-        Estatus:"Confirmed",
-        l:"Full Day",
-        lreason:"Due to high fever",
-        lstatus:"Approved",
-        tl:36,
-        lt:5,
 
-
-
-    },
-    {   name: 'Animesh', 
-    lfrom: '24/04/2020',
-    lupto:'26/04/2020', 
-    ltype: "CL" ,
-    Estatus:"Confirmed",
-    l:"Full Day",
-    lreason:"Due to high fever",
-    lstatus:" Not Approved",
-    tl:36,
-    lt:10,
-
-},
-{   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-}, {   name: 'Mehmet', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:"Approved",
-tl:36,
-lt:5,
-
-
-
-},
-{   name: 'Animesh', 
-lfrom: '24/04/2020',
-lupto:'26/04/2020', 
-ltype: "CL" ,
-Estatus:"Confirmed",
-l:"Full Day",
-lreason:"Due to high fever",
-lstatus:" Not Approved",
-tl:36,
-lt:10,
-
-},
     ],
   });
+
+  useEffect(() => {    // Update the document title using the browser API 
+; 
+    if(state.requestd === false) {
+  axios.post("/leaveLog", {
+    "from": "2020-05-01",
+    "to": "2020-05-30"
+    
+    }).then(response => {
+    
+      let Empdata = {...state , requestd:true};
+      let list = [];
+   
+for(let i=0;i<response.data.result.length;i++){
+   let changedVal = response.data.result[i];
+
+   changedVal.leaveFrom = changedVal.leaveFrom.toString().substring(0,10);
+   changedVal.leaveTo = changedVal.leaveTo.toString().substring(0,10);
+   changedVal = {...changedVal , total : "36"}
+   if(changedVal.empStatus === 'Ind1'){
+     changedVal = {...changedVal , status: "Probation"}
+   } else {
+    changedVal = {...changedVal , status: "Probation"}
+   }
+
+   if(changedVal.leaveTime === "1") {
+     changedVal = {...changedVal ,time:"Full Day" }
+   } else{
+    changedVal = {...changedVal ,time:"Half Day" }
+   }
+
+   list.push(changedVal);
+}
+console.log(list);
+      //console.log(response.data.result);
+      Empdata.data = list;
+      setState(Empdata);
+     }).catch(err => {
+      Swal.fire('Oops...', 'Connection Error', 'error')
+     })
+    }  
+    console.log("useEffect")
+   });
 
   return (
     <MaterialTable
@@ -288,41 +82,7 @@ lt:10,
       columns={state.columns}
       data={state.data}
       editable={{
-        onRowAdd: (newData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState((prevState) => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-        onRowDelete: (oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
+       
       }}
     />
   );
