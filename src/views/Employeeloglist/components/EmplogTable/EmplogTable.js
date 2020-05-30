@@ -11,8 +11,11 @@ export default function MaterialTableDemo() {
       { title: 'Address 2', field: 'address2' },
       { title: 'Contact', field: 'phone', type: 'numeric' },
       { title: 'Position Info', field: 'posTitle' },
+      { title: 'Experiance Info', field: 'posTitle' },
       { title: 'Reports To', field: 'reportTo' },
       { title: 'Bank Info', field: 'bankName' },
+      { title: 'Type', field: 'DocsType' },
+      { title: 'Download', field: 'Docsdownload' },
 
 
 

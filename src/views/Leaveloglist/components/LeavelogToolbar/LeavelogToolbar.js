@@ -2,9 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+
+
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
   row: {
     height: '42px',
     display: 'flex',
@@ -45,7 +55,25 @@ const UsersToolbar = props => {
           Approved
         </Button>
       </div> */}
-     
+<div>
+<TextField
+          id="outlined-helperText"
+          defaultValue="Date from"
+          helperText="Search by Leave From"
+          variant="outlined"
+          type="Date"
+        />
+        <TextField
+          id="outlined-helperText"
+          defaultValue="Date To"
+          helperText="Search by Leave Upto"
+          variant="outlined"
+          type="Date"
+        />
+
+
+
+        </div>
     </div>
   );
 };

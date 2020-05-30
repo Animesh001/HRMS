@@ -2,6 +2,8 @@ import React , {useEffect} from 'react';
 import MaterialTable from 'material-table';
 import Swal from 'sweetalert2';
 import axios from '../../../../axios-routes';
+import TextField from '@material-ui/core/TextField';
+
 export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
     requestd:false,
@@ -84,6 +86,9 @@ console.log(list);
       editable={{
        
       }}
+
+      
     />
+    
   );
 }
