@@ -35,13 +35,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 const UsersToolbar = props => {
+  
   const { className, ...rest } = props;
 
   const classes = useStyles();
 
   return (
     <div
+      
       {...rest}
       className={clsx(classes.root, className)}
     >
@@ -56,20 +59,6 @@ const UsersToolbar = props => {
         </Button>
       </div> */}
 <div>
-<TextField
-          id="outlined-helperText"
-          defaultValue="Date from"
-          helperText="Search by Leave From"
-          variant="outlined"
-          type="Date"
-        />
-        <TextField
-          id="outlined-helperText"
-          defaultValue="Date To"
-          helperText="Search by Leave Upto"
-          variant="outlined"
-          type="Date"
-        />
 
 
 

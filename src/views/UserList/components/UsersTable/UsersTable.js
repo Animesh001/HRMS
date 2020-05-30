@@ -61,7 +61,7 @@ let emp = {...Emp};
    let fname = "";
    let mname = "";
    let lname = "";
-if(!emp.doc1 || !emp.doc2 || !emp.name || !emp.phone || !emp.email){
+if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !emp.phone===undefined  || !emp.email===undefined ){
   return Swal.fire('Incomplete Form', 'Please Fill All The Details', 'error')
 }
 
@@ -72,7 +72,7 @@ if(!emp.doc1 || !emp.doc2 || !emp.name || !emp.phone || !emp.email){
     } 
     if(key === "lName"){
       lname =  emp[key];
-      console.log( fname + mname + lname);
+      console.log( fname+ " " + mname +" " + lname);
       data.append('name', fname+" " + mname + " " + lname);
     } else if(key === "mName") {
       mname  = emp[key];

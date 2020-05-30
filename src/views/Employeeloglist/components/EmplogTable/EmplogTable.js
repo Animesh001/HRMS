@@ -7,25 +7,22 @@ export default function MaterialTableDemo() {
     requestd : false,
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Address 1', field: 'address1' },
-      { title: 'Address 2', field: 'address2' },
+      { title: 'Address1', field: 'address1' },
       { title: 'Contact', field: 'phone', type: 'numeric' },
-      { title: 'Position Info', field: 'posTitle' },
-      { title: 'Experiance Info', field: 'posTitle' },
+      { title: 'Emergency ', field: 'emergencyContact', type: 'numeric' },
+      { title: 'Email', field: 'email' },
+      { title: 'Position', field: 'posTitle' },
+      { title: 'Last Org', field: 'lastOrg1' },
       { title: 'Reports To', field: 'reportTo' },
-      { title: 'Bank Info', field: 'bankName' },
-      { title: 'Type', field: 'DocsType' },
-      { title: 'Download', field: 'Docsdownload' },
-
-
-
-    //   {
+      { title: 'Leaves Remaining', field: 'leaveRemaining' },
+      //   {
     //     title: 'Birth Place',
     //     field: 'birthCity',
     //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
     //   },
     ],
     data: [ ],
+
   });
 
 
@@ -50,6 +47,78 @@ export default function MaterialTableDemo() {
       title="Employee Logbook"
       columns={state.columns}
       data={state.data}
+
+      // other props
+      detailPanel={rowData => {
+        return (
+          <div>
+    <br/>    <br/>
+   <div className="d-flex justify-content-center">
+      <div>
+        <h2>Employee Details</h2>
+        </div>
+   </div>
+   <div style={{paddingLeft:"3%"}}>
+     <br/>
+   <h5>Personal Details</h5>
+   <br/>
+   <div style={{paddingLeft:"8%"}}>
+      <p>Name : {rowData.name}</p>
+      <p>Contact : {rowData.phone}</p>
+      <p>Emergency Contact : {rowData.emergencyContact}</p>
+      <p>Email : {rowData.email}</p>
+        <p>Address 1: {rowData.address1}</p>
+        <p>Address 2: {rowData.address2}</p>
+        <p>City: {rowData.city}</p>
+        <p>State: {rowData.state}</p>
+      <p>Country:{rowData.country}</p>
+        <p>Date Of Birth: {rowData.dob}</p>
+       
+      </div>
+
+      <br/>
+   <h5>Work Details</h5>
+   <br/>
+   <div style={{paddingLeft:"8%"}}>
+  
+        <p>Joining Date: {rowData.joinDate}</p>
+        <p>End Date: {rowData.endDate}</p>
+      <p>Last Organization 1: {rowData.lastOrg1}</p>
+        <p> Duration :{rowData.duration1}</p>
+      <p>Designation : {rowData.designation1}</p>
+      <p>Last Organization 2: {rowData.lastOrg2}</p>
+        <p> Duration :{rowData.duration2}</p>
+      <p>Designation : {rowData.designation2}</p>
+      </div>
+
+
+      <br/>
+   <h5>Bank Details</h5>
+   <br/>
+   <div style={{paddingLeft:"8%"}}>
+  
+        <p>Bank Name: {rowData.bankName}</p>
+        <p>Account No: {rowData.bankAccNo}</p>
+      <p>Accounnt Holder Name: {rowData.AccHolderName}</p>
+        <p> Tax File No. :{rowData.taxFileNo}</p>
+      <p>Account Type : {rowData.accType}</p>
+      <p>Bank IFSC: {rowData.ifsc}</p>
+      </div>
+      <br/>
+   <h5>Documents Uploaded</h5>
+   <br/>
+   <div style={{paddingLeft:"8%"}} >
+  
+   <img style={{height: "200px" , paddingRight:"5%"}} src={rowData.doc1} /> 
+   <img style={{height: "200px"}} src={rowData.doc2} />
+      </div>
+<br/>
+
+      </div>
+   </div>  
+        )
+      }}
+    
       editable={{
        
         onRowUpdate: (newData, oldData) =>

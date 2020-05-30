@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { EmplogToolbar, EmplogTable } from './components';
 // import mockData from './data';
 
