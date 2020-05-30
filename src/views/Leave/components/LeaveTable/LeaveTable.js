@@ -1,27 +1,28 @@
-import React from 'react';
+import React, {useState}from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-
+import axios from '../../../../axios-routes';
+import { Button } from '@material-ui/core';
+import Swal from 'sweetalert2';
 const currencies = [
     {
-      value: 'India',
+      value: 'CL',
       label: 'CL',
     },
     {
-      value: 'USA',
+      value: 'PL',
       label: 'PL',
     },
     {
-      value: 'USD',
+      value: 'SL',
       label: 'SL',
     },
     {
-        value: 'US',
+        value: 'COMP-OFF',
         label: 'COMP-OFF',
       },
       {
-        value: 'USt',
+        value: 'LWP',
         label: 'LWP',
       },
   ];
@@ -58,8 +59,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   }));
-  
-  
+
   // export class UsersTable extends React.Component{
     export default function FormPropsTextFields() {
      const classes = useStyles();
@@ -68,6 +68,38 @@ const useStyles = makeStyles((theme) => ({
      const handleChange = (event) => {
        setCurrency(event.target.value);
      };
+
+    
+     const [leaveData, setLeaveData]  = useState({phone: "" ,name: "" ,leaveType:"CL" ,empStatus:"Ind1",leaveTime: "1"});
+     const dataHandler =(e, field )=> {
+       let ph =e.target.value;
+      let data = {...leaveData , [field]: e.target.value};
+      setLeaveData({...data})
+      console.log(leaveData);
+       if(field ==='phone' && ph.length === 10 ){
+           axios.post("/findEmployee",{ phone: e.target.value}).then(result => {
+             if(result.data.result.length > 0){
+              let name = result.data.result[0].name;
+              let data = {...leaveData , name: name , phone: ph};
+            setLeaveData({...data})
+             } else{
+               setLeaveData({phone: "" ,name: "" ,leaveType:"CL" ,empStatus:"Ind1",leaveTime: "1"});
+              Swal.fire('Oops...', 'Employee Not Found Make Sure You Entered Registered Mobile No.', 'error')
+             }
+            
+           })
+       }
+         
+     }
+   
+     const onSubmitHandler = () => {
+       axios.post("/addLeave", leaveData).then(res => {
+        Swal.fire('Successful', 'Leave Added Successfully', 'success')
+       }).catch(err => {
+        Swal.fire('Oops...', 'Failed To Add Leave', 'error')
+       });
+     }
+   
         // render(){
     return (
      <form className={classes.root} noValidate autoComplete="off">
@@ -75,17 +107,30 @@ const useStyles = makeStyles((theme) => ({
          <h1>Employee Leave Form</h1>
        </div>
     <div>
+
+    <TextField
+        required
+        id="outlined-required"
+        label="Mobile No"
+        variant="outlined"
+        value={leaveData.phone}
+        onChange={(e) => dataHandler(e, 'phone')}
+      />
       <TextField
         required
         id="outlined-required"
         label=" First Name"
+        value = {leaveData.name.split(" ")[0]}
         variant="outlined"
+      disabled
       />
       <TextField
         required
         id="outlined-required"
         label="Last Name"
+        value = {(leaveData.name.split(" ")[2] !==undefined ? leaveData.name.split(" ")[2]:"")}
         variant="outlined"
+        disabled
       />
       </div>
       <div>
@@ -97,11 +142,12 @@ const useStyles = makeStyles((theme) => ({
     label="From"
     type="date"
     variant="outlined"
-    defaultValue="2017-05-24"
+    defaultValue={new Date()}
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
     }}
+    onChange={(e) => dataHandler(e, 'leaveFrom')}
   />
 
 <TextField
@@ -109,24 +155,26 @@ const useStyles = makeStyles((theme) => ({
     label="To"
     type="date"
     variant="outlined"
-    defaultValue="2017-05-24"
+    defaultValue={new Date()}
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
     }}
+    onChange={(e) => dataHandler(e, 'leaveTo')}
   />
 
 <TextField
           id="outlined-select-currency-native"
           select
           label="Leave Types"
-          value={currency}
-          onChange={handleChange}
+          defaultValue={leaveData.leaveType}
+          
           SelectProps={{
             native: true,
           }}
           helperText="Please select Leave type"
           variant="outlined"
+          onChange={(e) => dataHandler(e, 'leaveType')}
         >
           {currencies.map((option) => (
             <option key={option.value} value={option.value}>
@@ -143,11 +191,12 @@ const useStyles = makeStyles((theme) => ({
           id="outlined-select-currency-native"
           select
           label="Employee Status"
-          value={currency}
-          onChange={handleChange}
+          defaultValue={leaveData.empStatus}
+         // onChange={}
           SelectProps={{
             native: true,
           }}
+          onChange={(e) => {dataHandler(e, 'empStatus'); handleChange(e)}}
           helperText="Please select Employee status"
           variant="outlined"
         >
@@ -162,13 +211,14 @@ const useStyles = makeStyles((theme) => ({
           id="outlined-select-currency-native"
           select
           label="Leave"
-          value={currency}
-          onChange={handleChange}
+          defaultValue={leaveData.leaveTime}
+         
           SelectProps={{
             native: true,
           }}
           helperText="Please select Leave"
           variant="outlined"
+          onChange={(e) => {dataHandler(e, 'leaveTime');handleChange(e)}}
         >
           {cur.map((option) => (
             <option key={option.value} value={option.value}>
@@ -190,7 +240,21 @@ const useStyles = makeStyles((theme) => ({
           rows={9}
           variant="outlined"
           width="150ch"
+          onChange={(e) => dataHandler(e, 'reason')}
+          
         />
+           </div>
+           <div className="d-flex justify-content-center">
+             <div>
+           <Button
+          color="primary"
+          variant="contained"
+          onClick={onSubmitHandler}
+          type="reset"
+        >
+          Add Leave
+        </Button>
+        </div>
            </div>
       </form>
 );

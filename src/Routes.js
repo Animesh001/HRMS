@@ -11,8 +11,7 @@ import {
   Employeeloglist as EmployeeloglistView,
   Leaveloglist as LeaveloglistView,
   Settings as SettingsView,
-  SignUp as SignUpView,
-  SignIn as SignInView,
+
   NotFound as NotFoundView
 } from './views';
 
