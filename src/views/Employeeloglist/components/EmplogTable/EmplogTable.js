@@ -36,6 +36,7 @@ export default function MaterialTableDemo() {
       Empdata.data = response.data.result;
       setState(Empdata);
      }).catch(err => {
+       console.log(err);
       Swal.fire('Oops...', 'Connection Error', 'error')
      })
     }  
@@ -72,7 +73,7 @@ export default function MaterialTableDemo() {
         <p>City: {rowData.city}</p>
         <p>State: {rowData.state}</p>
       <p>Country:{rowData.country}</p>
-        <p>Date Of Birth: {rowData.dob}</p>
+        <p>Date Of Birth: {rowData.dob.substring(0,10)}</p>
        
       </div>
 
@@ -81,8 +82,8 @@ export default function MaterialTableDemo() {
    <br/>
    <div style={{paddingLeft:"8%"}}>
   
-        <p>Joining Date: {rowData.joinDate}</p>
-        <p>End Date: {rowData.endDate}</p>
+        <p>Joining Date: {rowData.joinDate.substring(0,10)}</p>
+        <p>End Date: {rowData.endDate.substring(0,10)}</p>
       <p>Last Organization 1: {rowData.lastOrg1}</p>
         <p> Duration :{rowData.duration1}</p>
       <p>Designation : {rowData.designation1}</p>
