@@ -30,10 +30,25 @@ export default function MaterialTableDemo() {
  
     if(state.requestd === false) {
   axios.post("/listEmployee", {}).then(response => {
-    
+    let result = response.data.result;
+    for(let i=0;i<result.length;i++){
+      if(result[i].dob !== undefined || result[i].dob!==null){
+        result[i].dob = result[i].dob.substring(0,10);
+      } 
+      if(result[i].joinDate !== undefined || result[i].joinDate!==null){
+        result[i].joinDate = result[i].joinDate.substring(0,10);
+      }
+      if(!result[i].endDate === undefined || !result[i].endDate===null){
+        result[i].endDate = result[i].endDate.substring(0,10);
+      } else {
+        result[i].endDate = "";
+      }
+    }
+
+
       let Empdata = {...state , requestd:true};
       //console.log(response.data.result);
-      Empdata.data = response.data.result;
+      Empdata.data = result;
       setState(Empdata);
      }).catch(err => {
        console.log(err);
@@ -73,7 +88,10 @@ export default function MaterialTableDemo() {
         <p>City: {rowData.city}</p>
         <p>State: {rowData.state}</p>
       <p>Country:{rowData.country}</p>
-        <p>Date Of Birth: {rowData.dob.substring(0,10)}</p>
+
+        <p>Date Of Birth:{rowData.dob}</p>
+  
+       
        
       </div>
 
@@ -82,8 +100,8 @@ export default function MaterialTableDemo() {
    <br/>
    <div style={{paddingLeft:"8%"}}>
   
-        <p>Joining Date: {rowData.joinDate.substring(0,10)}</p>
-        <p>End Date: {rowData.endDate.substring(0,10)}</p>
+        <p>Joining Date: { rowData.joinDate }</p>
+        <p>End Date:{ rowData.endDate}</p>
       <p>Last Organization 1: {rowData.lastOrg1}</p>
         <p> Duration :{rowData.duration1}</p>
       <p>Designation : {rowData.designation1}</p>

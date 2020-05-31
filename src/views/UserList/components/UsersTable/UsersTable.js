@@ -1,22 +1,22 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Spinner from 'react-spinner-material';
 import { Button } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import axios from '../../../../axios-routes';
 const currencies = [
   {
-    value: 'India',
-    label: 'India',
+    value: 'INDIA',
+    label: 'INDIA',
   },
   {
     value: 'USA',
     label: 'USA',
   },
   {
-    value: 'USD',
-    label: 'Australia',
+    value: 'AUSTRALIA',
+    label: 'AUSTRALIA',
   },
 ];
 
@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
 // export class UsersTable extends React.Component{
   export default function FormPropsTextFields() {
     let data = new FormData();
-const [Emp, setEmp] = React.useState(data);
+    const [isLoading, setIsLoading] = React.useState(false);
+const [Emp, setEmp] = React.useState({country: "INDIA"});
    const classes = useStyles();
 
 
@@ -52,16 +53,16 @@ const imgAdd = (e ,field)=> {
       emp = {...Emp , [field]: e.target.value};
 
       setEmp(emp);
-      //console.log(Emp)
+      console.log(Emp)
   }
 const onSubmitHandler = ()=> {
-
+setIsLoading(true)
   
 let emp = {...Emp};
    let fname = "";
    let mname = "";
    let lname = "";
-if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !emp.phone===undefined  || !emp.email===undefined ){
+if(!emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !emp.phone===undefined  || !emp.email===undefined  || !emp.dob ===undefined|| !emp.joinDate === undefined  ){
   return Swal.fire('Incomplete Form', 'Please Fill All The Details', 'error')
 }
 
@@ -87,6 +88,7 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
 }
   axios.post("/addEmployee", data, config)
     .then(response => {
+      setIsLoading(false);
        if(response.data.code === 0){
         Swal.fire('Success', 'Employee Added Successfully!', 'success');
        } else {
@@ -95,7 +97,7 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
        setEmp({});
     })
     .catch(error => {
-  
+      setIsLoading(false);
         Swal.fire('Oops...', 'Connection Error', 'error')
     });
 }
@@ -103,8 +105,13 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
 
       // render(){
   return (
+    <div>
+    { isLoading ?  <div style={{paddingLeft: "40%"}}>
+      <Spinner radius={120} color={"#333"} stroke={2} visible={true} />
+    </div> :  
    <form className={classes.root} noValidate autoComplete="off">
      <div>
+  
        <h1>Personal Information</h1>
      </div>
   <div>
@@ -223,7 +230,7 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
        label="Date Of Birth"
        type="date"
        variant="outlined"
-       defaultValue={new Date()}
+       defaultValue=""
        className={classes.textField}
        InputLabelProps={{
          shrink: true,
@@ -268,7 +275,7 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
     label="Joining Date"
     type="date"
     variant="outlined"
-    defaultValue={Date.UTC()}
+    defaultValue={new Date().toISOString()}
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
@@ -415,7 +422,8 @@ if(emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !
         </div>
       </div>
 </form>
-
+ } 
+ </div>
   );
   
 }
