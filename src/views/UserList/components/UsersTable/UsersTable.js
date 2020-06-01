@@ -145,6 +145,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="First Name"
       variant="outlined"
+      value={Emp.fName}
       onChange={(e ) => consoleLogger(e, "fName")}
     />
       <TextField
@@ -152,6 +153,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Middle Name"
       variant="outlined"
+      value={Emp.mName}
       onChange={(e ) => consoleLogger(e, "mName")}
     />
       <TextField
@@ -159,6 +161,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Last Name"
       variant="outlined"
+      value={Emp.lName}
       onChange={(e ) => consoleLogger(e, "lName")}
     />
   </div>
@@ -171,6 +174,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Street Address"
       variant="outlined"
+      value={Emp.address1}
       onChange={(e ) => consoleLogger(e, "address1")}
     />
       <TextField
@@ -178,6 +182,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Street Address Line2"
       variant="outlined"
+      value={Emp.address2}
       onChange={(e ) => consoleLogger(e, "address2")}
     />
    
@@ -188,6 +193,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="City"
       variant="outlined"
+      value={Emp.city}
       onChange={(e ) => consoleLogger(e, "city")}
     />
       <TextField
@@ -195,6 +201,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="State"
       variant="outlined"
+      value={Emp.state}
       onChange={(e ) => consoleLogger(e, "state")}
     />
       <TextField
@@ -202,13 +209,13 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Zip code"
       variant="outlined"
+      value={Emp.zip}
       onChange={(e ) => consoleLogger(e, "zip")}
     />
   <TextField
           id="outlined-select-currency-native"
           select
           label="Country"
-
           onChange={(e ) => {consoleLogger(e, "country")}}
           SelectProps={{
             native: true,
@@ -234,6 +241,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Phone no"
       variant="outlined"
+      value={Emp.phone}
       onChange={(e ) => consoleLogger(e, "phone")}
     />
      <TextField
@@ -241,6 +249,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Email"
       variant="outlined"
+      value={Emp.email}
       onChange={(e ) => consoleLogger(e, "email")}
     />
      <TextField
@@ -248,6 +257,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Emergency cont"
       variant="outlined"
+      value={Emp.emergencyContact}
       onChange={(e ) => consoleLogger(e, "emergencyContact")}
     />
      <TextField
@@ -255,7 +265,7 @@ if(emp.phone.length !== 10){
        label="Date Of Birth"
        type="date"
        variant="outlined"
-       defaultValue=""
+       value={Emp.dob}
        className={classes.textField}
        InputLabelProps={{
          shrink: true,
@@ -272,6 +282,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Position Title"
       variant="outlined"
+      value={Emp.posTitle}
       onChange={(e ) => consoleLogger(e, "posTitle")}
     />
      <TextField
@@ -279,6 +290,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Report To"
       variant="outlined"
+      value={Emp.reportTo}
       onChange={(e ) => consoleLogger(e, "reportTo")}
     />
      <TextField
@@ -286,6 +298,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Employment Type"
       variant="outlined"
+      value={Emp.empType}
       onChange={(e ) => consoleLogger(e, "empType")}
     />
       <TextField
@@ -293,6 +306,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Department"
       variant="outlined"
+      value={Emp.dept}
       onChange={(e ) => consoleLogger(e, "dept")}
     />
      <TextField
@@ -300,7 +314,8 @@ if(emp.phone.length !== 10){
     label="Joining Date"
     type="date"
     variant="outlined"
-    defaultValue={new Date().toISOString()}
+    value={Emp.joinDate}
+  
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
@@ -313,6 +328,7 @@ if(emp.phone.length !== 10){
     type="date"
     variant="outlined"
     defaultValue=""
+    value = {Emp.endDate}
     className={classes.textField}
     InputLabelProps={{
       shrink: true,
@@ -329,6 +345,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Last Organization"
       variant="outlined"
+      value={Emp.lastOrg1}
       onChange={(e ) => consoleLogger(e, "lastOrg1")}
     />
      <TextField
@@ -336,6 +353,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Duration"
       variant="outlined"
+      value={Emp.duration1}
       onChange={(e ) => consoleLogger(e, "duration1")}
     />
      <TextField
@@ -343,6 +361,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Designation"
       variant="outlined"
+      value={Emp.designation1}
       onChange={(e ) => consoleLogger(e, "designation1")}
     />
     <TextField
@@ -350,6 +369,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Last Organization"
       variant="outlined"
+      value={Emp.lastOrg2}
       onChange={(e ) => consoleLogger(e, "lastOrg2")}
     />
      <TextField
@@ -357,6 +377,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Duration"
       variant="outlined"
+      value={Emp.duration2}
       onChange={(e ) => consoleLogger(e, "duration2")}
     />
      <TextField
@@ -364,6 +385,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Designation"
       variant="outlined"
+      alue={Emp.designation2}
       onChange={(e ) => consoleLogger(e, "designation2")}
     />
        </div>
@@ -376,6 +398,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Account No"
       variant="outlined"
+      value = {Emp.bankAccNo}
       onChange={(e ) => consoleLogger(e, "bankAccNo")}
     />
     <TextField
@@ -383,6 +406,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Account Name"
       variant="outlined"
+      value = {Emp.AccHolderName}
       onChange={(e ) => consoleLogger(e, "AccHolderName")}
     />
     <TextField
@@ -390,6 +414,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Tax File No"
       variant="outlined"
+      value = {Emp.taxFileNo}
       onChange={(e ) => consoleLogger(e, "taxFileNo")}
     />
     <TextField
@@ -397,12 +422,14 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="Bank Name"
       variant="outlined"
+      value = {Emp.bankName}
       onChange={(e ) => consoleLogger(e, "bankName")}
     />
     <TextField
       id="outlined"
       label="Account Type"
       variant="outlined"
+      value = {Emp.accType}
       onChange={(e ) => consoleLogger(e, "accType")}
     />
     <TextField
@@ -410,6 +437,7 @@ if(emp.phone.length !== 10){
       id="outlined-required"
       label="IFSC Code"
       variant="outlined"
+      value = {Emp.ifsc}
       onChange={(e ) => consoleLogger(e, "ifsc")}
     />
     </div>
