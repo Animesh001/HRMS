@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 const [Emp, setEmp] = React.useState({country: "INDIA"});
    const classes = useStyles();
 
-
 const imgAdd = (e ,field)=> {
   const MIME_TYPE_MAP = {
     'image/png': 'png',
@@ -58,10 +57,14 @@ const imgAdd = (e ,field)=> {
    if(isValid){
      let data = new FormData();
      data.append('file',e.target.files[0]);
+     setIsLoading(true)
      axios.post("/upload", data).then(res=> {
+      setIsLoading(false)
        let emp = {...Emp, [field]: res.data.result};
       setEmp(emp);
      }).catch(err => {
+       console.log(err)
+      setIsLoading(false)
       Swal.fire('Oops...', 'Connection Error', 'error')
      });
    } else {
@@ -414,18 +417,21 @@ if(emp.phone.length !== 10){
        <h3>Upload Docs</h3>
      </div>
     <div>
-    <TextField
+  {Emp.doc1 ===undefined ?  <TextField
       type="file"
       required
       variant="outlined"
-      onChange={(e ) => imgAdd(e, "doc1")}
-    />
-     <TextField
+    
+      onChange={(e ) => {imgAdd(e, "doc1");}}
+    />: <span>{" "}Document 1 Uploaded{" "}</span>}
+    {"       "}
+    {Emp.doc2 ===undefined ? <TextField
       type="file"
       required
       variant="outlined"
-      onChange={(e ) => imgAdd(e, "doc2")}
-    />
+     
+      onChange={(e ) => {imgAdd(e, "doc2"); }}
+    />:<span>{" "}Document 2 Uploaded</span>}
 
 
       </div>
