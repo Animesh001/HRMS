@@ -32,16 +32,17 @@ export default function MaterialTableDemo() {
   axios.post("/listEmployee", {}).then(response => {
     let result = response.data.result;
     for(let i=0;i<result.length;i++){
-      if(result[i].dob !== undefined || result[i].dob!==null){
-        result[i].dob = result[i].dob.substring(0,10);
+      if(!result[i].dob === undefined || !result[i].dob ===null){
+        result[i].dob = result[i].dob.substring(0,10) ;
       } 
-      if(result[i].joinDate !== undefined || result[i].joinDate!==null){
+      if(!result[i].joinDate === undefined || !result[i].joinDate ===null){
         result[i].joinDate = result[i].joinDate.substring(0,10);
       }
       if(!result[i].endDate === undefined || !result[i].endDate===null){
         result[i].endDate = result[i].endDate.substring(0,10);
       } else {
         result[i].endDate = "";
+        result[i].dob = "";
       }
     }
 
@@ -127,9 +128,9 @@ export default function MaterialTableDemo() {
    <h5>Documents Uploaded</h5>
    <br/>
    <div style={{paddingLeft:"8%"}} >
-  
-   <img style={{height: "200px" , paddingRight:"5%"}} src={rowData.doc1} /> 
-   <img style={{height: "200px"}} src={rowData.doc2} />
+   {  rowData.doc1 ===undefined? " ": <button className="btn btn-primary" onClick={()=> window.open(rowData.doc1, "_blank")} >View Document 1</button> } {" "}
+
+        {  rowData.doc2 ===undefined? " ": <button className="btn btn-primary" onClick={()=> window.open(rowData.doc2, "_blank")}>View Document 2</button> }
       </div>
 <br/>
 

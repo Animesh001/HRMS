@@ -35,17 +35,39 @@ const useStyles = makeStyles((theme) => ({
 
 // export class UsersTable extends React.Component{
   export default function FormPropsTextFields() {
-    let data = new FormData();
+  
     const [isLoading, setIsLoading] = React.useState(false);
 const [Emp, setEmp] = React.useState({country: "INDIA"});
    const classes = useStyles();
 
 
 const imgAdd = (e ,field)=> {
+  const MIME_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg' : 'jpg',
+    'image/PNG': 'png',
+    'image/JPEG': 'jpg',
+    'image/JPG' : 'jpg',
+    'application/pdf': 'pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
+  };
+  const isValid = MIME_TYPE_MAP[e.target.files[0].type];
+  //let error = new Error('Invalid MIme Type')
+//console.log(e.target.files[0]);
+   if(isValid){
+     let data = new FormData();
+     data.append('file',e.target.files[0]);
+     axios.post("/upload", data).then(res=> {
+       let emp = {...Emp, [field]: res.data.result};
+      setEmp(emp);
+     }).catch(err => {
+      Swal.fire('Oops...', 'Connection Error', 'error')
+     });
+   } else {
+    Swal.fire('Invalid File Type', 'Accepted Types Are Word, Image And Pdf', 'error')
+   }
 
-  let emp = {...Emp , [field]: e.target.files[0]};
-  setEmp(emp);
-  console.log(Emp);
 }
    const consoleLogger = (e , field) => {
     let emp ;
@@ -57,24 +79,27 @@ const imgAdd = (e ,field)=> {
   }
 const onSubmitHandler = ()=> {
 setIsLoading(true)
-  
+  let data ={};
 let emp = {...Emp};
    let fname = "";
    let mname = "";
    let lname = "";
-if(!emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || !emp.phone===undefined  || !emp.email===undefined  || !emp.dob ===undefined|| !emp.joinDate === undefined  ){
+if(emp.doc1.length === 0  || !emp.name===undefined  || !emp.phone===undefined  || !emp.email===undefined  || !emp.dob ===undefined|| !emp.joinDate === undefined  ){
   return Swal.fire('Incomplete Form', 'Please Fill All The Details', 'error')
+}
+if(emp.phone.length !== 10){
+  Swal.fire('Invalid Form', 'Phone Number Should Be of 10 Digits', 'error')
 }
 
   Object.keys(emp).forEach(key => {
    
     if(key !== "fName" || key !== "mName" || key !== "lName"){
-      data.append([key], emp[key]);
+      data[key] = emp[key];
     } 
     if(key === "lName"){
       lname =  emp[key];
       console.log( fname+ " " + mname +" " + lname);
-      data.append('name', fname+" " + mname + " " + lname);
+      data.name = fname+" " + mname + " " + lname;
     } else if(key === "mName") {
       mname  = emp[key];
     } else if(key === "fName"){
@@ -82,11 +107,8 @@ if(!emp.doc1===undefined || !emp.doc2===undefined  || !emp.name===undefined  || 
     }
  
   })
-
-  const config = {     
-    headers: { 'content-type': 'multipart/form-data' }
-}
-  axios.post("/addEmployee", data, config)
+//console.log(data);
+  axios.post("/addEmployee", data)
     .then(response => {
       setIsLoading(false);
        if(response.data.code === 0){
