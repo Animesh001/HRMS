@@ -39,7 +39,7 @@
     "material-table": "^1.58.2",
     "material-ui-datetime-range-picker": "^1.0.0",
     "moment": "^2.26.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.7.6",
